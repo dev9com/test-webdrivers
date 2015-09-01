@@ -45,6 +45,14 @@
         <url>https://github.com/dev9com/test-webdrivers</url>
         <tag>HEAD</tag>
     </scm>
+    <issueManagement>
+        <system>GitHub</system>
+        <url>https://github.com/dev9com/test-webdrivers/issues</url>
+    </issueManagement>
+    <ciManagement>
+        <system>Travis CI</system>
+        <url>https://travis-ci.org/dev9com/testng-webdriver</url>
+    </ciManagement>
     <dependencyManagement>
         <dependencies>
             <dependency>
