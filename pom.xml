@@ -40,6 +40,11 @@
         <module>testng-webdriver</module>
         <module>webdriver-utils</module>
     </modules>
+    <scm>
+        <connection>https://github.com/dev9com/test-webdrivers.git</connection>
+        <url>https://github.com/dev9com/test-webdrivers</url>
+        <tag>HEAD</tag>
+    </scm>
     <dependencyManagement>
         <dependencies>
             <dependency>
