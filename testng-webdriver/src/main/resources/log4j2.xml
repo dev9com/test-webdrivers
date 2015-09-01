@@ -1,0 +1,16 @@
+<Configuration>
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%-12date{HH:mm:ss.SSS}  %-5level  %-60logger{60} -> %msg%n"/>
+        </Console>
+    </Appenders>
+    <Loggers>
+        <Logger name="com.dev9" level="debug">
+            <AppenderRef ref="Console"/>
+        </Logger>
+        <Logger name="com.gargoylesoftware.htmlunit" level="off"/>
+        <Root level="info">
+            <AppenderRef ref="Console"/>
+        </Root>
+    </Loggers>
+</Configuration>
