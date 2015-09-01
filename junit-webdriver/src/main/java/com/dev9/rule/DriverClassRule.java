@@ -1,24 +1,20 @@
 package com.dev9.rule;
 
-import java.util.List;
-import java.util.Set;
-import org.junit.rules.ExternalResource;
-import org.junit.runner.Description;
-import org.junit.runners.model.Statement;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebDriverException;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.HasInputDevices;
-import org.openqa.selenium.interactions.Keyboard;
-import org.openqa.selenium.interactions.Mouse;
 import com.dev9.conf.SauceLabsCredentials;
 import com.dev9.driver.TargetWebDriver;
 import com.dev9.sauce.SauceREST;
 import com.dev9.sauce.SauceUtils;
-
 import lombok.extern.log4j.Log4j2;
+import org.junit.rules.ExternalResource;
+import org.junit.runner.Description;
+import org.junit.runners.model.Statement;
+import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.HasInputDevices;
+import org.openqa.selenium.interactions.Keyboard;
+import org.openqa.selenium.interactions.Mouse;
+
+import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -204,7 +200,7 @@ public class DriverClassRule extends ExternalResource implements WebDriver, Java
         targetWebDriver.set(target);
     }
 
-    private void reportFailure() {
+    protected void reportFailure() {
         failed.set(true);
     }
 
