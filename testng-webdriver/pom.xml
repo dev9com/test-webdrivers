@@ -43,7 +43,7 @@
         <dependency>
             <groupId>com.dev9</groupId>
             <artifactId>webdriver-utils</artifactId>
-            <version>${parent.version}</version>
+            <version>${project.parent.version}</version>
         </dependency>
         <dependency>
             <groupId>org.testng</groupId>

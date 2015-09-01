@@ -1,12 +1,12 @@
 package com.dev9.sauce;
 
+import lombok.extern.log4j.Log4j2;
+import org.json.simple.JSONValue;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
-import org.json.simple.JSONValue;
-
-import lombok.extern.log4j.Log4j2;
 
 
 /**
@@ -34,6 +34,7 @@ public class SauceRESTRequestBuilder {
      *
      * @param key   String key for the json object.
      * @param value Value can be discrete or a list, map.
+     * @return this object
      */
     public SauceRESTRequestBuilder addJSON(String key, Object value) {
         jsonMap.put(key, value);
@@ -48,6 +49,7 @@ public class SauceRESTRequestBuilder {
 
     /**
      * Adds standard "/users" section to constructed url.  Does not check location in path.
+     * @return this object
      */
     public SauceRESTRequestBuilder addUsersToPath() {
         this.suffix += "/users";
@@ -57,6 +59,7 @@ public class SauceRESTRequestBuilder {
     /**
      * Adds a user name to the path.  Does not check location in path.
      * @param user  A Sauce Labs user name.
+     * @return this object
      */
     public SauceRESTRequestBuilder addUserIdToPath(String user) {
         this.suffix += "/";
@@ -66,6 +69,7 @@ public class SauceRESTRequestBuilder {
 
     /**
      * Adds standard "/jobs" section to constructed url.  Does not check location in path.
+     * @return this object
      */
     public SauceRESTRequestBuilder addJobsToPath() {
         this.suffix += "/jobs";
@@ -74,6 +78,7 @@ public class SauceRESTRequestBuilder {
 
     /**
      * Adds a job id to the path.  Does not check location in path.
+     * @return this object
      */
     public SauceRESTRequestBuilder addJobIdToPath(String jobId) {
         this.suffix += "/";
@@ -84,6 +89,7 @@ public class SauceRESTRequestBuilder {
     /**
      * Adds a string to the path.  Does not check location.  May require a leading slash.
      * @param suffix    Any string to add to the constructed path.
+     * @return this object
      */
     public SauceRESTRequestBuilder addGenericSuffix(String suffix) {
         this.suffix += suffix;
@@ -93,6 +99,7 @@ public class SauceRESTRequestBuilder {
     /**
      * Sets the version ("v1" is the default).
      * @param version   The version of the REST api in the path.
+     * @return this object
      */
     public SauceRESTRequestBuilder setVersion(String version) {
         this.version = version;
@@ -101,6 +108,7 @@ public class SauceRESTRequestBuilder {
 
     /**
      * Constructs the SauceRESTRequest object from combination of defaults and overrides.
+     * @return the sauce request
      */
     public SauceRESTRequest build() {
 
