@@ -39,8 +39,8 @@
             <id>ddrake</id>
             <name>David Drake</name>
             <email>David DOT Drake AT dev9 DOT com</email>
-            <organization>${organization.name}</organization>
-            <organizationUrl>${organization.url}</organizationUrl>
+            <organization>${project.organization.name}</organization>
+            <organizationUrl>${project.organization.url}</organizationUrl>
             <roles>
                 <role>Developer</role>
             </roles>
