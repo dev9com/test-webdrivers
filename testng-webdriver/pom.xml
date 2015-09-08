@@ -13,32 +13,6 @@
     <packaging>jar</packaging>
     <name>TestNG Webdriver</name>
     <description>TestNG Webdriver</description>
-    <url>https://github.com/dev9com/test-webdrivers</url>
-    <organization>
-        <name>Dev9, LLC.</name>
-        <url>http://www.dev9.com/</url>
-    </organization>
-    <licenses>
-        <license>
-            <name>Apache License, Version 2.0</name>
-            <url>http://www.apache.org/licenses/LICENSE-2.0</url>
-        </license>
-    </licenses>
-    <developers>
-        <developer>
-            <id>jgraham</id>
-            <name>Justin Graham</name>
-            <email>Justin DOT Graham AT dev9 DOT com</email>
-            <organization>${project.organization.name}</organization>
-            <organizationUrl>${project.organization.url}</organizationUrl>
-            <roles>
-                <role>Developer</role>
-            </roles>
-        </developer>
-    </developers>
-    <prerequisites>
-        <maven>3.2.1</maven>
-    </prerequisites>
     <dependencies>
         <dependency>
             <groupId>com.dev9</groupId>

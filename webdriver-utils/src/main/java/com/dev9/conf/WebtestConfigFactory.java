@@ -1,14 +1,14 @@
 package com.dev9.conf;
 
+import com.typesafe.config.Config;
+import com.typesafe.config.ConfigFactory;
+import lombok.extern.log4j.Log4j2;
+
 import java.io.File;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import com.typesafe.config.Config;
-import com.typesafe.config.ConfigFactory;
-
-import lombok.extern.log4j.Log4j2;
 
 
 /**
@@ -24,10 +24,6 @@ public class WebtestConfigFactory {
     private static final Config DEFAULT_CONFIG = addProfileToConfig(ConfigFactory.defaultOverrides()
             .withFallback(ConfigFactory.load()));
     private static final Map<Class, Config> CLASS_CONFIG = new ConcurrentHashMap<Class, Config>();
-
-    private WebtestConfigFactory() throws IllegalAccessException {
-        throw new IllegalAccessException("WebtestConfigFactory is a static utility class that cannot be constructed");
-    }
 
     public static Config getConfig() {
         return DEFAULT_CONFIG;

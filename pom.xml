@@ -31,6 +31,16 @@
                 <role>Developer</role>
             </roles>
         </developer>
+        <developer>
+            <id>ddrake</id>
+            <name>David Drake</name>
+            <email>David DOT Drake AT dev9 DOT com</email>
+            <organization>${project.organization.name}</organization>
+            <organizationUrl>${project.organization.url}</organizationUrl>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </developer>
     </developers>
     <prerequisites>
         <maven>3.2.1</maven>
@@ -42,9 +52,20 @@
     </modules>
     <scm>
         <connection>https://github.com/dev9com/test-webdrivers.git</connection>
+        <developerConnection>scm:git:https://github.com/dev9com/test-webdrivers.git</developerConnection>
         <url>https://github.com/dev9com/test-webdrivers</url>
         <tag>HEAD</tag>
     </scm>
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
     <issueManagement>
         <system>GitHub</system>
         <url>https://github.com/dev9com/test-webdrivers/issues</url>
@@ -144,6 +165,59 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>1.6.3</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <serverId>nexus</serverId>
+                    <nexusUrl>https://oss.sonatype.org/service/local/staging/deploy/maven2</nexusUrl>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
+    <profiles>
+        <profile>
+            <id>release-to-central</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>1.6</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign-and-deploy-file</goal>
+                                </goals>
+                                <configuration>
+                                    <keyname>26AF8B6E</keyname>
+                                    <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+                                    <pomFile>pom.xml</pomFile>
+                                    <artifactId>${project.artifactId}</artifactId>
+                                    <groupId>${project.groupId}</groupId>
+                                    <version>${project.version}</version>
+
+                                    <file>target/${project.artifactId}-${project.version}.jar</file>
+                                    <files>
+                                        target/${project.artifactId}-${project.version}-sources.jar,target/${project.artifactId}-${project.version}-javadoc.jar
+                                    </files>
+                                    <types>jar,jar</types>
+                                    <classifiers>sources,javadoc</classifiers>
+                                    <repositoryId>nexus</repositoryId>
+                                    <gpgArguments>
+                                        <argument>--armor</argument>
+                                        <argument>--detach-sig</argument>
+                                    </gpgArguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
