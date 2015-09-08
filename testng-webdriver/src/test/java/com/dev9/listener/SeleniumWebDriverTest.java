@@ -3,13 +3,16 @@ package com.dev9.listener;
 import com.dev9.driver.ThreadLocalWebDriver;
 import mockit.*;
 import org.testng.ITestContext;
+import org.testng.ITestNGMethod;
 import org.testng.ITestResult;
 import org.testng.annotations.Test;
 
 import java.lang.reflect.Field;
+import java.util.*;
 
 import static mockit.Deencapsulation.getField;
 import static mockit.Deencapsulation.invoke;
+import static mockit.Deencapsulation.setField;
 
 /**
  * @author <a href="mailto:Justin.Graham@dev9.com">Justin Graham</a>
@@ -147,5 +150,73 @@ public class SeleniumWebDriverTest {
         new Verifications() {{
             field.setAccessible(true);
         }};
+    }
+
+    @Test
+    public void testEndDriverNotClass() throws Exception {
+        new Expectations(seleniumWebDriver) {{
+            invoke(seleniumWebDriver, "isClassDriver"); result = false;
+            invoke(seleniumWebDriver, "quitDriver", iTestResult);
+        }};
+        invoke(seleniumWebDriver, "endDriver", iTestResult);
+    }
+
+    @Test
+    public void testEndDriverNoRemainingMethods(@Injectable final ITestNGMethod method) throws Exception {
+        new Expectations(seleniumWebDriver) {{
+            invoke(seleniumWebDriver, "isClassDriver"); result = true;
+            iTestResult.getMethod(); result = method;
+            method.getRealClass(); result = SeleniumWebDriverTest.class;
+            setField(seleniumWebDriver, "classListMap", new HashMap<Class, List<ITestNGMethod>>(){{
+                put(SeleniumWebDriverTest.class, Collections.EMPTY_LIST);
+            }});
+            invoke(seleniumWebDriver, "quitDriver", iTestResult);
+        }};
+        invoke(seleniumWebDriver, "endDriver", iTestResult);
+    }
+
+    @Test
+    public void testEndDriverNotMatchingMethod(@Injectable final ITestNGMethod method) throws Exception {
+        new Expectations(seleniumWebDriver) {{
+            invoke(seleniumWebDriver, "isClassDriver"); result = true;
+            iTestResult.getMethod(); result = method;
+            method.getRealClass(); result = SeleniumWebDriverTest.class;
+            setField(seleniumWebDriver, "classListMap", new HashMap<Class, List<ITestNGMethod>>(){{
+                put(SeleniumWebDriverTest.class, Collections.singletonList(method));
+            }});
+            method.getMethodName(); returns("Name1", "Name2");
+        }};
+        invoke(seleniumWebDriver, "endDriver", iTestResult);
+    }
+
+    @Test
+    public void testEndDriverCount1(@Injectable final ITestNGMethod method) throws Exception {
+        new Expectations(seleniumWebDriver) {{
+            invoke(seleniumWebDriver, "isClassDriver"); result = true;
+            iTestResult.getMethod(); result = method;
+            method.getRealClass(); result = SeleniumWebDriverTest.class;
+            setField(seleniumWebDriver, "classListMap", new HashMap<Class, List<ITestNGMethod>>(){{
+                put(SeleniumWebDriverTest.class, new ArrayList<ITestNGMethod>(){{ add(method); }});
+            }});
+            method.getMethodName(); result = "Name1";
+            method.getInvocationCount(); result = 1;
+            invoke(seleniumWebDriver, "quitDriver", iTestResult);
+        }};
+        invoke(seleniumWebDriver, "endDriver", iTestResult);
+    }
+
+    @Test
+    public void testEndDriver(@Injectable final ITestNGMethod method) throws Exception {
+        new Expectations(seleniumWebDriver) {{
+            invoke(seleniumWebDriver, "isClassDriver"); result = true;
+            iTestResult.getMethod(); result = method;
+            method.getRealClass(); result = SeleniumWebDriverTest.class;
+            setField(seleniumWebDriver, "classListMap", new HashMap<Class, List<ITestNGMethod>>(){{
+                put(SeleniumWebDriverTest.class, new ArrayList<ITestNGMethod>(){{ add(method); }});
+            }});
+            method.getMethodName(); result = "Name1";
+            method.getInvocationCount(); result = 2;
+        }};
+        invoke(seleniumWebDriver, "endDriver", iTestResult);
     }
 }
