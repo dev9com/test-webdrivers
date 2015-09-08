@@ -200,28 +200,8 @@
                                 <id>sign-artifacts</id>
                                 <phase>verify</phase>
                                 <goals>
-                                    <goal>sign-and-deploy-file</goal>
+                                    <goal>sign</goal>
                                 </goals>
-                                <configuration>
-                                    <keyname>26AF8B6E</keyname>
-                                    <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-                                    <pomFile>pom.xml</pomFile>
-                                    <artifactId>${project.artifactId}</artifactId>
-                                    <groupId>${project.groupId}</groupId>
-                                    <version>${project.version}</version>
-
-                                    <file>${project.artifactId}-${project.version}.jar</file>
-                                    <files>
-                                        ${project.artifactId}-${project.version}-sources.jar,${project.artifactId}-${project.version}-javadoc.jar
-                                    </files>
-                                    <types>jar,jar</types>
-                                    <classifiers>sources,javadoc</classifiers>
-                                    <repositoryId>nexus</repositoryId>
-                                    <gpgArguments>
-                                        <argument>--armor</argument>
-                                        <argument>--detach-sig</argument>
-                                    </gpgArguments>
-                                </configuration>
                             </execution>
                         </executions>
                     </plugin>
