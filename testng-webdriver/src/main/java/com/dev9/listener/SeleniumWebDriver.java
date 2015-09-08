@@ -24,13 +24,11 @@ import com.dev9.driver.ThreadLocalWebDriver;
  */
 public class SeleniumWebDriver extends TestListenerAdapter {
 
-    private static Map<Class, List<ITestNGMethod>> classListMap = new HashMap<Class, List<ITestNGMethod>>();
-    ThreadLocal<Field> webDriverField = new ThreadLocal<Field>();
+    private static final Map<Class, List<ITestNGMethod>> classListMap = new HashMap<Class, List<ITestNGMethod>>();
+    private final ThreadLocal<Field> webDriverField = new ThreadLocal<Field>();
     // Keeps track if Driver annotation exists and if driver is enabled
-    ThreadLocal<Boolean> isDriverTest = new ThreadLocal<Boolean>() {{
-        set(false);
-    }};
-    ThreadLocal<List<String>> excludedMethods = new ThreadLocal<List<String>>();
+    private final ThreadLocal<Boolean> isDriverTest = new ThreadLocal<Boolean>() {{ set(false); }};
+    private final ThreadLocal<List<String>> excludedMethods = new ThreadLocal<List<String>>();
 
     /*==========================================================================
                                          Start
@@ -226,11 +224,7 @@ public class SeleniumWebDriver extends TestListenerAdapter {
      */
     private String getTestDescription(ITestResult tr) {
         String description = tr.getMethod().getDescription();
-        if (description != null && !description.equals("")) {
-            return description;
-        } else {
-            return null;
-        }
+        return (description != null && !description.equals("")) ? description : null;
     }
 
     private boolean isClassDriver() {
