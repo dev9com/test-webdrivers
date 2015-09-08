@@ -210,9 +210,9 @@
                                     <groupId>${project.groupId}</groupId>
                                     <version>${project.version}</version>
 
-                                    <file>target/${project.artifactId}-${project.version}.jar</file>
+                                    <file>${project.artifactId}-${project.version}.jar</file>
                                     <files>
-                                        target/${project.artifactId}-${project.version}-sources.jar,target/${project.artifactId}-${project.version}-javadoc.jar
+                                        ${project.artifactId}-${project.version}-sources.jar,${project.artifactId}-${project.version}-javadoc.jar
                                     </files>
                                     <types>jar,jar</types>
                                     <classifiers>sources,javadoc</classifiers>
