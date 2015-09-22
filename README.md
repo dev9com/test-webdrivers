@@ -40,7 +40,7 @@ writing UI tests.
                }
             }
 
-    * To select a profile you would use the flag flag: ```-Dwebtest.profile=``` and give it your configuration name:  
+    * To select a profile you would use the flag: ```-Dwebtest.profile=``` and give it your configuration name:  
     ```-Dwebtest.profile=local-chrome``` or ```-Dwebtest.profile=remote-iexplore```
     
 
