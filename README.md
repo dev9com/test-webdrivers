@@ -13,34 +13,34 @@ writing UI tests.
     * Create config file: ```src/test/resources/application.conf```
     * Add the default browser:
     
-        webdriver {
-            browser: firefox
-            type:    local
-        }
+            webdriver {
+               browser: firefox
+               type:    local
+            }
         
     * Add any additional browser configurations by wrapping the webdriver object with a unique name:
         
-        local-chrome {
-            webdriver {
-                browser:  chrome
-                type:     local
+            local-chrome {
+               webdriver {
+                   browser:  chrome
+                   type:     local
+               }
             }
-        }
         
     * The webdriver projects support remote jobs through SauceLabs. For this to work you must first define 2 
     environment variables  ```SAUCELABS_USER``` assigned your SauceLabs username and ```SAUCELABS_KEY``` assigned 
     your SauceLabs key. Once that is complete you can define a new webdriver config using the ```type: remote``` flag:
         
-        remote-iexplore {
-            webdriver {
-                browser:  iexplore
-                type:     remote
-                version:  8
-                platform: windows
+            remote-iexplore {
+               webdriver {
+                   browser:  iexplore
+                   type:     remote
+                   version:  8
+                   platform: windows
+               }
             }
-        }
 
-    * To select a profile you would use the flag flag: ```-Dwebtest.profile=``` and give it your configuration name:
+    * To select a profile you would use the flag flag: ```-Dwebtest.profile=``` and give it your configuration name:  
     ```-Dwebtest.profile=local-chrome``` or ```-Dwebtest.profile=remote-iexplore```
     
 
