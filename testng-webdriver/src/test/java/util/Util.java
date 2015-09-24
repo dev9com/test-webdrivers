@@ -11,6 +11,8 @@ import org.testng.annotations.DataProvider;
 public final class Util {
     public static final String HTTP_PROTOCOL = "http://";
     public static final String YAHOO_DOMAIN = "www.yahoo.com/";
+    public static final String GOOGLE_DOMAIN = "www.google.com/";
+    public static final String GITHUB_DOMAIN = "github.com/";
 
     public static void sleep() throws InterruptedException {
         Thread.sleep(2000);
@@ -19,10 +21,10 @@ public final class Util {
     @DataProvider(parallel = true)
     public static Object[][] dataProvider() {
         return new Object[][] {
-                {"http://www.google.com", 1},
-                {"http://www.yahoo.com/", 2},
+                {HTTP_PROTOCOL + GOOGLE_DOMAIN, 1},
+                {HTTP_PROTOCOL + YAHOO_DOMAIN, 2},
                 {"http://www.wikipedia.org/", 3},
-                {"http://github.com/", 4}
+                {HTTP_PROTOCOL + GITHUB_DOMAIN, 4}
         };
     }
 }

@@ -84,6 +84,7 @@
         <jmockit.verion>1.19</jmockit.verion>
         <assertj.version>3.1.0</assertj.version>
         <log4j.version>2.3</log4j.version>
+        <annotations.version>13.0</annotations.version>
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.source>1.8</maven.compiler.source>
     </properties>
@@ -158,6 +159,11 @@
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
             <version>${log4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>${annotations.version}</version>
         </dependency>
     </dependencies>
     <build>
