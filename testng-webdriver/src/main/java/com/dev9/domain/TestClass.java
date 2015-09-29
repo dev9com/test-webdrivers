@@ -24,6 +24,7 @@ public class TestClass {
     @NotNull private final Object instance;
     @NotNull private final List<ITestNGMethod> methods;
     @Nullable private final Field webdriverField;
+    @Nullable private String windowHandle;
 
     /**
      * Builds a TestClass object from the given TestNG IClass instance.
@@ -62,7 +63,9 @@ public class TestClass {
             }
 
             try {
-                webdriverField.set(instance, new ThreadLocalWebDriver(instance.getClass(), testDescription));
+                WebDriver driver = new ThreadLocalWebDriver(instance.getClass(), testDescription);
+                windowHandle = driver.getWindowHandle();
+                webdriverField.set(instance, driver);
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             }
@@ -115,7 +118,7 @@ public class TestClass {
             }
 
             try {
-                ((WebDriver) webdriverField.get(instance)).quit();
+                ((WebDriver) webdriverField.get(instance)).close();
                 webdriverField.set(instance, null);
             } catch (Exception e) { /* Ignore stopping the driver messages */ }
         }
@@ -165,6 +168,9 @@ public class TestClass {
         // Horrid way to check if .quit() was called on the driver.
         try {
             WebDriver driver = (WebDriver) webdriverField.get(instance);
+            if (windowHandle != null && !windowHandle.equals(driver.getWindowHandle())) {
+                driver.switchTo().window(windowHandle);
+            }
             driver.getTitle();
             return true;
         } catch (Exception e) { return false; }

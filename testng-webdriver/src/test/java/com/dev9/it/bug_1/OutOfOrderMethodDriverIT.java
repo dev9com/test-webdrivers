@@ -21,6 +21,7 @@ public class OutOfOrderMethodDriverIT {
 
     @Test(priority = 1)
     public void testBreaker() throws Exception {
+        System.out.println("OutOfOrderMethodDriverIT:Break: " + driver.getWindowHandle() + ", " + driver);
         driver.get(HTTP_PROTOCOL + GOOGLE_DOMAIN);
     }
 }

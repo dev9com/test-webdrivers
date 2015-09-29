@@ -20,13 +20,17 @@ public class DependentClassDriverIT {
 
     @ClassDriver private WebDriver driver;
 
+    private PageObject pageObject;
+
     @Test(priority = 0)
     public void testOne() throws Exception {
-        driver.get(HTTP_PROTOCOL + GITHUB_DOMAIN);
+        System.out.println("DependentClassDriverIT:One: " + driver.getWindowHandle() + ", " + driver);
+        this.pageObject = new PageObject(driver);
     }
 
     @Test(priority = 2, dependsOnMethods = {"testOne"})
     public void testTwo() throws Exception {
-        driver.findElement(By.cssSelector("a[href='/explore']")).click();
+        System.out.println("DependentClassDriverIT:Two: " + driver.getWindowHandle() + ", " + driver);
+        pageObject.clickExplore();
     }
 }
