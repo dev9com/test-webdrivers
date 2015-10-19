@@ -2,10 +2,8 @@ package com.dev9.driver;
 
 import java.util.List;
 import java.util.Set;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.HasInputDevices;
 import org.openqa.selenium.interactions.Keyboard;
 import org.openqa.selenium.interactions.Mouse;
@@ -22,7 +20,7 @@ import lombok.extern.log4j.Log4j2;
  * @since 8/7/13
  */
 @Log4j2
-public class ThreadLocalWebDriver implements WebDriver, JavascriptExecutor, HasInputDevices {
+public class ThreadLocalWebDriver implements WebDriver, JavascriptExecutor, HasInputDevices, TakesScreenshot {
 
     private static ThreadLocal<WebDriver> driver = new ThreadLocal<WebDriver>();
     private static ThreadLocal<Class> testClass = new ThreadLocal<Class>();
@@ -172,5 +170,10 @@ public class ThreadLocalWebDriver implements WebDriver, JavascriptExecutor, HasI
         if (targetWebDriver.get().isRemote()) {
             log.info("Remote job url: {}", getJobUrl());
         }
+    }
+
+    @Override
+    public <X> X getScreenshotAs(OutputType<X> target) throws WebDriverException {
+        return ((TakesScreenshot) driver).getScreenshotAs(target);
     }
 }
