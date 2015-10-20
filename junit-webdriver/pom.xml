@@ -3,7 +3,7 @@
     <parent>
         <groupId>com.dev9</groupId>
         <artifactId>test-webdrivers</artifactId>
-        <version>1.5</version>
+        <version>1.5-SNAPSHOT</version>
         <relativePath>..</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
