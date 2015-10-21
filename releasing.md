@@ -32,4 +32,4 @@ then ```$ gpg --keyserver keyserver.ubuntu.com --send-keys GPG_KEY```
 9. Click Staging Repositories
 10. Click the new repository (should have name like comdev9-num)
 11. Click Close at top and verify everything passes
-12. Click Release to public new artifact
+12. Click Release to publish new artifact
