@@ -12,8 +12,8 @@ import java.io.File;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Test
-public class CastToTakesScreenshotTest {
+@Test(groups = {"IT"})
+public class CastToTakesScreenshotTestIT {
 
     private WebDriver driver;
 
