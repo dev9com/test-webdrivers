@@ -174,6 +174,6 @@ public class ThreadLocalWebDriver implements WebDriver, JavascriptExecutor, HasI
 
     @Override
     public <X> X getScreenshotAs(OutputType<X> target) throws WebDriverException {
-        return ((TakesScreenshot) driver).getScreenshotAs(target);
+        return ((TakesScreenshot) driver.get()).getScreenshotAs(target);
     }
 }
