@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.dev9</groupId>
     <artifactId>test-webdrivers</artifactId>
-    <version>1.6-SNAPSHOT</version>
+    <version>1.6</version>
     <packaging>pom</packaging>
     <name>Test Webdrivers</name>
     <description>Test Webdrivers</description>
@@ -52,7 +52,7 @@
         <connection>https://github.com/dev9com/test-webdrivers.git</connection>
         <developerConnection>scm:git:https://github.com/dev9com/test-webdrivers.git</developerConnection>
         <url>https://github.com/dev9com/test-webdrivers</url>
-        <tag>HEAD</tag>
+        <tag>test-webdrivers-1.6</tag>
     </scm>
     <distributionManagement>
         <snapshotRepository>
