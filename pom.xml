@@ -73,7 +73,7 @@
         <url>https://travis-ci.org/dev9com/testng-webdriver</url>
     </ciManagement>
     <properties>
-        <selenium.version>2.47.1</selenium.version>
+        <selenium.version>2.48.2</selenium.version>
         <phantom.version>1.1.0</phantom.version>
         <opera.version>1.5</opera.version>
         <lombok.version>1.16.6</lombok.version>
