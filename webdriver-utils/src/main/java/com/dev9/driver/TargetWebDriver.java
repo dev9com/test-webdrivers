@@ -1,19 +1,7 @@
 package com.dev9.driver;
 
-import java.lang.reflect.Constructor;
-import java.util.UUID;
-import org.apache.commons.lang3.ArrayUtils;
-import org.openqa.selenium.Capabilities;
-import org.openqa.selenium.Platform;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.remote.RemoteWebDriver;
-import com.dev9.conf.SauceLabsCredentials;
-import com.dev9.conf.WebtestConfigFactory;
-import com.google.common.base.Throwables;
-import com.typesafe.config.Config;
-
-import lombok.extern.log4j.Log4j2;
+import src.main.java.com.dev9.conf.SauceLabsCredentials;
+import src.main.java.com.dev9.conf.WebtestConfigFactory;
 
 
 /**
@@ -64,10 +52,16 @@ public class TargetWebDriver {
     }
 
     public TargetWebDriver(Class testClass) {
+        this(testClass, null);
+    }
+
+    public TargetWebDriver(Class testClass, String WebBrowserName)
+    {
+
         Config config = WebtestConfigFactory.getConfig(testClass);
 
         this.testClass = testClass;
-        this.browser = getBrowserFrom(config);
+        this.browser = getBrowserFrom(config, WebBrowserName);
         this.type = getTypeFrom(config);
 
         if (isLocal()) {
@@ -142,10 +136,16 @@ public class TargetWebDriver {
         return new RemoteWebDriver(SauceLabsCredentials.getConnectionLocation(), getCapabilities());
     }
 
-    private Browser getBrowserFrom(Config config) {
+    private Browser getBrowserFrom(Config config, String WebBrowserName)
+    {
         Browser result;
         try {
-            result = Browser.fromJson(config.getString(WEBDRIVER_BROWSER_PATH));
+
+            if (WebBrowserName == null || WebBrowserName.length() == 0)
+            {
+                WebBrowserName = WEBDRIVER_BROWSER_PATH;
+            }
+            result = Browser.fromJson(config.getString(WebBrowserName));
         }
         catch (IllegalArgumentException ex) {
             log.error("Invalid browser.  Must be one of {}", ArrayUtils.toString(Browser.values()));

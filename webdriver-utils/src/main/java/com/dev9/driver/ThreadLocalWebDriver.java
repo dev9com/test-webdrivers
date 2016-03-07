@@ -28,22 +28,33 @@ public class ThreadLocalWebDriver implements WebDriver, JavascriptExecutor, HasI
     private static ThreadLocal<String> jobId = new ThreadLocal<String>();
 
     public ThreadLocalWebDriver(Class clazz) {
-        testClass.set(clazz);
-        targetWebDriver.set(new TargetWebDriver(testClass.get()));
-        init();
+        this(clazz, null, null);
     }
 
     public ThreadLocalWebDriver(Class clazz, String testDescription) {
-        testClass.set(clazz);
-        TargetWebDriver targetDriver = new TargetWebDriver(clazz);
+        this(clazz, testDescription, null);
+    }
 
-        if (testDescription != null && !testDescription.equals("")) {
+    public ThreadLocalWebDriver(Class clazz, String testDescription, String BrowserName) {
+            testClass.set(clazz);
+        TargetWebDriver targetDriver = null; new TargetWebDriver(clazz);
+
+        if (testDescription != null && testDescription.length() != 0) {
             targetDriver.getCapabilities().setCapability("name", testDescription);
+        }
+
+        if (BrowserName != null && BrowserName.length() != 0) {
+            targetDriver = new TargetWebDriver(clazz, BrowserName);
+        }
+        else
+        {
+            targetDriver = new TargetWebDriver(clazz);
         }
 
         targetWebDriver.set(targetDriver);
         init();
     }
+
 
     private void init() {
         setDriver(targetWebDriver.get());

@@ -14,6 +14,7 @@ import org.testng.TestListenerAdapter;
 import com.dev9.annotation.ClassDriver;
 import com.dev9.annotation.MethodDriver;
 import com.dev9.driver.ThreadLocalWebDriver;
+import org.testng.internal.TestResult;
 
 
 /**
@@ -90,8 +91,17 @@ public class SeleniumWebDriver extends TestListenerAdapter {
 
     private void initializeDriver(ITestResult tr) {
         try {
-            webDriverField.get().set(
-                    tr.getInstance(), new ThreadLocalWebDriver(getRealTestClass(tr), getTestDescription(tr)));
+            String BrowserName = tr.getTestContext().getCurrentXmlTest().getParameter("browser");
+
+            ThreadLocalWebDriver threadLocalWebDriver = null;
+            if (null == BrowserName || BrowserName.length() ==0) {
+                threadLocalWebDriver = new ThreadLocalWebDriver(getRealTestClass(tr), getTestDescription(tr));
+            }
+            else
+            {
+                threadLocalWebDriver = new ThreadLocalWebDriver(getRealTestClass(tr), getTestDescription(tr), BrowserName);
+            }
+            webDriverField.get().set(tr.getInstance(), threadLocalWebDriver);
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
