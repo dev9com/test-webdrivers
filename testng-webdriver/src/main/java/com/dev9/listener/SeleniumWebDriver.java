@@ -1,20 +1,17 @@
 package com.dev9.listener;
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.dev9.annotation.ClassDriver;
+import com.dev9.annotation.MethodDriver;
+import com.dev9.driver.ThreadLocalWebDriver;
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
 import org.testng.ITestNGMethod;
 import org.testng.ITestResult;
 import org.testng.TestListenerAdapter;
-import com.dev9.annotation.ClassDriver;
-import com.dev9.annotation.MethodDriver;
-import com.dev9.driver.ThreadLocalWebDriver;
-import org.testng.internal.TestResult;
+
+import java.lang.reflect.Field;
+import java.util.*;
 
 
 /**
@@ -89,19 +86,18 @@ public class SeleniumWebDriver extends TestListenerAdapter {
         }
     }
 
-    private void initializeDriver(ITestResult tr) {
+    private void initializeDriver(ITestResult testResult) {
         try {
-            String BrowserName = tr.getTestContext().getCurrentXmlTest().getParameter("browser");
+            String browserName = testResult.getTestContext().getCurrentXmlTest().getParameter("webtest.profile");
 
             ThreadLocalWebDriver threadLocalWebDriver = null;
-            if (null == BrowserName || BrowserName.length() ==0) {
-                threadLocalWebDriver = new ThreadLocalWebDriver(getRealTestClass(tr), getTestDescription(tr));
+            if (StringUtils.isEmpty(browserName)) {
+                threadLocalWebDriver = new ThreadLocalWebDriver(getRealTestClass(testResult), getTestDescription(testResult));
             }
-            else
-            {
-                threadLocalWebDriver = new ThreadLocalWebDriver(getRealTestClass(tr), getTestDescription(tr), BrowserName);
+            else {
+                threadLocalWebDriver = new ThreadLocalWebDriver(getRealTestClass(testResult), getTestDescription(testResult), browserName);
             }
-            webDriverField.get().set(tr.getInstance(), threadLocalWebDriver);
+            webDriverField.get().set(testResult.getInstance(), threadLocalWebDriver);
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
