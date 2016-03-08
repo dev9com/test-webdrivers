@@ -37,7 +37,7 @@ public class ThreadLocalWebDriver implements WebDriver, JavascriptExecutor, HasI
 
     public ThreadLocalWebDriver(Class clazz, String testDescription, String browserName) {
         testClass.set(clazz);
-        TargetWebDriver targetDriver = null; new TargetWebDriver(clazz);
+        TargetWebDriver targetDriver = new TargetWebDriver(clazz);
 
         if (!StringUtils.isEmpty(testDescription)) {
             targetDriver.getCapabilities().setCapability("name", testDescription);
