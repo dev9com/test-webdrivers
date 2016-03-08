@@ -1,20 +1,20 @@
 package com.dev9.driver;
 
-import java.lang.reflect.Constructor;
-import java.util.UUID;
+import com.dev9.conf.SauceLabsCredentials;
+import com.dev9.conf.WebtestConfigFactory;
+import com.google.common.base.Throwables;
+import com.typesafe.config.Config;
+import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import com.dev9.conf.SauceLabsCredentials;
-import com.dev9.conf.WebtestConfigFactory;
-import com.google.common.base.Throwables;
-import com.typesafe.config.Config;
 
-import lombok.extern.log4j.Log4j2;
-
+import java.lang.reflect.Constructor;
+import java.util.UUID;
 
 /**
  * User: yurodivuie
@@ -64,10 +64,15 @@ public class TargetWebDriver {
     }
 
     public TargetWebDriver(Class testClass) {
+        this(testClass, null);
+    }
+
+    public TargetWebDriver(Class testClass, String browserName)
+    {
         Config config = WebtestConfigFactory.getConfig(testClass);
 
         this.testClass = testClass;
-        this.browser = getBrowserFrom(config);
+        this.browser = getBrowserFrom(config, browserName);
         this.type = getTypeFrom(config);
 
         if (isLocal()) {
@@ -142,10 +147,16 @@ public class TargetWebDriver {
         return new RemoteWebDriver(SauceLabsCredentials.getConnectionLocation(), getCapabilities());
     }
 
-    private Browser getBrowserFrom(Config config) {
+    private Browser getBrowserFrom(Config config, String browserName)
+    {
         Browser result;
         try {
-            result = Browser.fromJson(config.getString(WEBDRIVER_BROWSER_PATH));
+
+            if (StringUtils.isEmpty(browserName))
+            {
+                browserName = WEBDRIVER_BROWSER_PATH;
+            }
+            result = Browser.fromJson(config.getString(browserName));
         }
         catch (IllegalArgumentException ex) {
             log.error("Invalid browser.  Must be one of {}", ArrayUtils.toString(Browser.values()));

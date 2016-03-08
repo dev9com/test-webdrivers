@@ -1,16 +1,16 @@
 package com.dev9.driver;
 
-import java.util.List;
-import java.util.Set;
-
+import com.dev9.sauce.SauceUtils;
+import lombok.extern.log4j.Log4j2;
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.HasInputDevices;
 import org.openqa.selenium.interactions.Keyboard;
 import org.openqa.selenium.interactions.Mouse;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import com.dev9.sauce.SauceUtils;
 
-import lombok.extern.log4j.Log4j2;
+import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -28,19 +28,27 @@ public class ThreadLocalWebDriver implements WebDriver, JavascriptExecutor, HasI
     private static ThreadLocal<String> jobId = new ThreadLocal<String>();
 
     public ThreadLocalWebDriver(Class clazz) {
-        testClass.set(clazz);
-        targetWebDriver.set(new TargetWebDriver(testClass.get()));
-        init();
+        this(clazz, null, null);
     }
 
     public ThreadLocalWebDriver(Class clazz, String testDescription) {
-        testClass.set(clazz);
-        TargetWebDriver targetDriver = new TargetWebDriver(clazz);
+        this(clazz, testDescription, null);
+    }
 
-        if (testDescription != null && !testDescription.equals("")) {
-            targetDriver.getCapabilities().setCapability("name", testDescription);
+    public ThreadLocalWebDriver(Class clazz, String testDescription, String browserName) {
+        testClass.set(clazz);
+        TargetWebDriver targetDriver = null;
+        if (!StringUtils.isEmpty(browserName)) {
+            targetDriver = new TargetWebDriver(clazz, browserName);
+        }
+        else
+        {
+            targetDriver = new TargetWebDriver(clazz);
         }
 
+        if (!StringUtils.isEmpty(testDescription)) {
+            targetDriver.getCapabilities().setCapability("name", testDescription);
+        }
         targetWebDriver.set(targetDriver);
         init();
     }
